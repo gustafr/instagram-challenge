@@ -5,6 +5,9 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rails'
 require 'factory_girl_rails'
+require 'coveralls'
+
+Coveralls.wear!
 
 ActiveRecord::Migration.maintain_test_schema!
 
