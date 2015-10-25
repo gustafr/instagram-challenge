@@ -38,6 +38,10 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.after(:suite) do
+    FileUtils.rm_rf(Dir["./public/system/posts/images"])
+  end
+
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|
       # Choose a test framework:

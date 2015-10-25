@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'spec_helper'
 
 describe 'posts' do
 
@@ -28,9 +29,10 @@ describe 'posts' do
 
     scenario 'can add a new post' do
       click_link "Add new post"
+      #byebug
       fill_in 'post_title', with: 'My first post'
       fill_in 'post_content', with: 'Hello world'
-      #byebug
+      attach_file("post_image", Rails.root + "spec/photos/test.jpg")
       click_on 'Create Post'
       expect(page.current_path).to eq '/posts'
       expect(page).to have_content 'My first post'
@@ -39,7 +41,8 @@ describe 'posts' do
   end
 
   context 'new post have been added' do
-    let! (:post) { Post.create(title: 'First post', content: 'Hello world!') }
+
+    let! (:post) {create(:post)}
     before do
       visit '/posts'
     end
@@ -58,7 +61,7 @@ describe 'posts' do
   end
 
   context 'visiting a posts unique page' do
-    let! (:post) { Post.create(title: 'First post', content: 'Hello world!') }
+    let! (:post) {create(:post)}
     before do
       visit "/posts/#{post.id}"
     end
