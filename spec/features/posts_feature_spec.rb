@@ -6,7 +6,7 @@ describe 'posts' do
     visit ('/posts')
   end
 
-  context 'no posts have been uploaded yet' do
+  context 'no posts have been added yet' do
 
     scenario 'it should display a message that there are no posts' do
       expect(page).to have_content "There are no posts in the system."
@@ -18,11 +18,23 @@ describe 'posts' do
   end
 
   context 'User click on Add new post' do
+
     scenario 'It shows an add posts form' do
       click_link "Add new post"
       expect(page.current_path).to eq ('/posts/new')
+    end
+  end
 
+  context 'posts have been added' do
+
+    before do
+      Post.create(title: "First post", content: "Hello world!")
+    end
+
+    it 'should list added posts' do
+      expect(page).to have_content "First post"
     end
 
   end
+
 end
