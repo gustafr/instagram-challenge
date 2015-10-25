@@ -3,17 +3,17 @@ require 'rails_helper'
 describe 'posts' do
 
   before do
-    visit ('/posts')
+    visit '/posts'
   end
 
   context 'no posts have been added yet' do
 
     scenario 'it should display a message that there are no posts' do
-      expect(page).to have_content "There are no posts in the system."
+      expect(page).to have_content 'There are no posts in the system.'
     end
 
     scenario 'it should display add new post link' do
-      expect(page).to have_content "Add new post"
+      expect(page).to have_content 'Add new post'
     end
   end
 
@@ -21,7 +21,7 @@ describe 'posts' do
 
     scenario 'shows an add posts form' do
       click_link "Add new post"
-      expect(page.current_path).to eq ('/posts/new')
+      expect(page.current_path).to eq '/posts/new'
       expect(page).to have_field 'post_title'
       expect(page).to have_field 'post_content'
     end
@@ -32,22 +32,40 @@ describe 'posts' do
       fill_in 'post_content', with: 'Hello world'
       #byebug
       click_on 'Create Post'
-      expect(page.current_path).to eq ('/posts')
+      expect(page.current_path).to eq '/posts'
       expect(page).to have_content 'My first post'
     end
 
   end
 
-  context 'posts have been added' do
-
+  context 'new post have been added' do
+    let! (:post) { Post.create(title: 'First post', content: 'Hello world!') }
     before do
-      Post.create(title: "First post", content: "Hello world!")
+      visit '/posts'
     end
 
     scenario 'should list added posts' do
-      visit ('/posts')
-      expect(page).to have_content "First post"
-      expect(page).not_to have_content "There are no posts in the system."
+      expect(page).to have_content 'First post'
+      expect(page).not_to have_content 'There are no posts in the system.'
+    end
+
+    scenario 'should be able to show a post' do
+      click_link 'First post'
+      expect(page).to have_content 'First post'
+      expect(page.current_path).to eq "/posts/#{post.id}"
+    end
+
+  end
+
+  context 'visiting a posts unique page' do
+    let! (:post) { Post.create(title: 'First post', content: 'Hello world!') }
+    before do
+      visit "/posts/#{post.id}"
+    end
+
+    scenario 'should display edit and delete links' do
+      expect(page).to have_content 'Edit post'
+      expect(page).to have_content 'Delete post'
     end
 
   end

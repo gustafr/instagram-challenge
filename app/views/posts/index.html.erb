@@ -1,6 +1,6 @@
 <% if @posts.all.any? %>
     <% @posts.all.each do |post| %>
-        <h2><%= post.title %></h2>
+        <h2><%= link_to post.title, post_path(post) %></h2>
         <h2><%= post.content %></h2>
     <% end %>
 <% else %>
