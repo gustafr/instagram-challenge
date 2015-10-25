@@ -72,9 +72,14 @@ describe 'posts' do
       click_link 'Edit post'
       fill_in 'post_title', with: 'Updated post'
       fill_in 'post_content', with: 'New content'
-      byebug
       click_on 'Update Post'
       expect(page).to have_content 'Updated post'
+    end
+
+    scenario 'should be able to delete a post' do
+      click_link 'Delete post'
+      expect(page).not_to have_content 'First post'
+      expect(page).to have_content 'Post deleted successfully!'
     end
 
   end
