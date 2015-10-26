@@ -14,6 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'foundation-rails'
 gem 'coveralls', require: false
 gem "paperclip", "~> 4.3"
+gem 'devise'
 
 group :production do
   gem 'rails_12factor'
