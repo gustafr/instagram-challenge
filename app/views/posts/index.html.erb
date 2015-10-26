@@ -2,6 +2,19 @@
     <% @posts.all.each do |post| %>
         <h2><%= link_to post.title, post_path(post) %></h2>
         <h2><%= post.content %></h2>
+        <%= image_tag post.image.url(:thumb) %>
+        <h3>Comments for <%= post.title %></h3>
+        <% if post.comments.any? %>
+            <ul>
+              <% post.comments.each do |comment| %>
+                  <li>
+                    <%= comment.thoughts %>
+                  </li>
+              <% end %>
+            </ul>
+        <% else %>
+            <p>No comments.</p>
+        <% end %>
     <% end %>
 <% else %>
     <p>There are no posts in the system.</p>

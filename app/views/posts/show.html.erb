@@ -1,5 +1,7 @@
 <p><%= @post.title %></p>
 <p><%= @post.content %></p>
 <%= image_tag @post.image.url(:medium) %>
+
 <p><%= link_to "Edit post", edit_post_path(@post.id)  %></p>
 <p><%= link_to "Delete post", post_path(@post.id), method: :delete  %></p>
+<p><%= link_to "Add comment", new_post_comment_path(@post.id) %></p>
