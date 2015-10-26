@@ -42,6 +42,34 @@ describe 'users' do
       click_button 'Sign up'
       expect(page).to have_content 'You have signed up successfully'
     end
+
+    scenario 'cant register as a new user with email address in wrong format' do
+      click_on 'Sign up'
+      fill_in 'Email', with:'test.com'
+      fill_in 'Password', with:'Password1'
+      fill_in 'Password confirmation', with:'Password1'
+      click_button 'Sign up'
+      expect(page).to have_content 'Email is invalid'
+    end
+
+    scenario 'cant register with a password shorter than 8 chars' do
+      click_on 'Sign up'
+      fill_in 'Email', with:'test@test.com'
+      fill_in 'Password', with:'Pass'
+      fill_in 'Password confirmation', with:'Pass'
+      click_button 'Sign up'
+      expect(page).to have_content 'Password is too short (minimum is 8 characters)'
+    end
+
+    scenario 'cant register with password that doesnt match confirmation' do
+      click_on 'Sign up'
+      fill_in 'Email', with:'test@test.com'
+      fill_in 'Password', with:'Password1'
+      fill_in 'Password confirmation', with:'Password2'
+      click_button 'Sign up'
+      expect(page).to have_content 'Password confirmation doesn\'t match Password'
+    end
+
   end
 
 end
