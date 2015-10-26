@@ -1,3 +1,4 @@
 class Comment < ActiveRecord::Base
-  belongs_to :restaurant
+  validates :thoughts, presence: true
+  belongs_to :post
 end

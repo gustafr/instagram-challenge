@@ -27,15 +27,48 @@ describe 'posts' do
       expect(page).to have_field 'post_content'
     end
 
-    scenario 'can add a new post' do
+    scenario 'can add a new post when typing in required information' do
       click_link "Add new post"
-      #byebug
       fill_in 'post_title', with: 'My first post'
       fill_in 'post_content', with: 'Hello world'
       attach_file("post_image", Rails.root + "spec/photos/test.jpg")
       click_on 'Create Post'
       expect(page.current_path).to eq '/posts'
       expect(page).to have_content 'My first post'
+    end
+
+    scenario 'cant add a new post without entering title' do
+      click_link "Add new post"
+      fill_in 'post_content', with: 'Hello world'
+      attach_file("post_image", Rails.root + "spec/photos/test.jpg")
+      click_on 'Create Post'
+      expect(page).to have_content 'Title can\'t be blank'
+    end
+
+    scenario 'cant add a new post without entering content' do
+      click_link "Add new post"
+      fill_in 'post_title', with: 'My first post'
+      attach_file("post_image", Rails.root + "spec/photos/test.jpg")
+      click_on 'Create Post'
+      expect(page).to have_content 'Content can\'t be blank'
+    end
+
+    scenario 'cant add a new post without attaching an image' do
+      click_link "Add new post"
+      fill_in 'post_title', with: 'My first post'
+      fill_in 'post_content', with: 'Hello world'
+      click_on 'Create Post'
+      expect(page).to have_content 'Image can\'t be blank'
+    end
+
+    scenario 'cant add a new post when attaching other file than image' do
+      click_link "Add new post"
+      fill_in 'post_title', with: 'My first post'
+      fill_in 'post_content', with: 'Hello world'
+      attach_file("post_image", Rails.root + "spec/photos/test.pdf")
+      click_on 'Create Post'
+      expect(page.current_path).to eq '/posts'
+      expect(page).to have_content 'Image content type is invalid'
     end
 
   end

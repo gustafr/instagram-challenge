@@ -6,6 +6,6 @@ class Post < ActiveRecord::Base
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates_with AttachmentSizeValidator, attributes: :image, less_than: 4.megabytes
   validates_attachment_file_name :image, matches: [/gif\Z/, /png\Z/, /jpe?g\Z/]
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
 end

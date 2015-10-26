@@ -21,7 +21,7 @@ describe 'comments' do
       expect(page).to have_field 'comment_thoughts'
     end
 
-    scenario 'user can add a comment and like a post' do
+    scenario 'user can add a comment' do
       click_link 'First post'
       click_link 'Add comment'
       fill_in 'comment_thoughts', with: 'Nice picture'
