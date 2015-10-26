@@ -26,6 +26,22 @@ describe 'users' do
       expect(page).to have_field 'Email'
       expect(page).to have_field 'Password'
     end
-
   end
+
+  context 'visiting sign up path' do
+
+    before do
+      visit '/'
+    end
+
+    scenario 'can register as a new user with valid credentials' do
+      click_on 'Sign up'
+      fill_in 'Email', with:'test@test.com'
+      fill_in 'Password', with:'Password1'
+      fill_in 'Password confirmation', with:'Password1'
+      click_button 'Sign up'
+      expect(page).to have_content 'You have signed up successfully'
+    end
+  end
+
 end
