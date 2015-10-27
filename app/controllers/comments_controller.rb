@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     comment = @post.comments.create(comment_params)
     comment.update_attribute(:user, current_user)
-    redirect_to '/posts'
+    redirect_to posts_path
   end
 
   def comment_params

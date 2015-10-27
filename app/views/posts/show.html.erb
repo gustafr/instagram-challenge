@@ -1,8 +1,6 @@
 <p><%= @post.title %></p>
 <p><%= @post.content %></p>
 <%= image_tag @post.image.url(:medium) %>
-<% if current_user.is_owner?(@post) %>
 <p><%= link_to "Edit post", edit_post_path(@post.id)  %></p>
 <p><%= link_to "Delete post", post_path(@post.id), method: :delete  %></p>
-<% end %>
 <p><%= link_to "Add comment", new_post_comment_path(@post.id) %></p>

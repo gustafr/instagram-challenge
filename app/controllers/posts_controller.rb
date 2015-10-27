@@ -26,6 +26,10 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    unless current_user.is_owner? @post
+      flash[:alert] = 'You are not the owner of this post!'
+      render 'show'
+    end
   end
 
   def update
@@ -40,11 +44,10 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    if
-      current_user.is_owner? @post
-        @post.destroy
-        flash[:notice] = 'Post deleted successfully!'
-        redirect_to posts_path
+    if current_user.is_owner? @post
+      @post.destroy
+      flash[:notice] = 'Post deleted successfully!'
+      redirect_to posts_path
     else
       flash[:alert] = 'You are not the owner of this post!'
       render 'show'
