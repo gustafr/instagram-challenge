@@ -101,6 +101,67 @@ describe 'users' do
       click_button 'Log in'
       expect(page).to have_content 'Invalid email or password'
     end
+  end
+
+  context 'user is signed in' do
+
+    let! (:user) { create(:user) }
+    before do
+      visit '/'
+      click_on 'Sign in'
+      fill_in 'Email', with: 'test@test.com'
+      fill_in 'Password', with: 'Password1'
+      click_button 'Log in'
+    end
+
+    scenario 'user can see that he is logged in' do
+      expect(page).to have_content 'Signed in as: test@test.com'
+    end
+
+    scenario 'user has a sign out link' do
+      expect(page).to have_content 'Sign out'
+      expect(page).not_to have_content 'Sign in'
+      expect(page).not_to have_content 'Sign up'
+    end
+
+    scenario 'user can sign out' do
+      click_link 'Sign out'
+      expect(page).to have_content 'Signed out successfully'
+    end
+
+    scenario 'user has a edit user link' do
+      expect(page).to have_content 'Edit user'
+    end
+
+    scenario 'user has a edit user link' do
+      click_link 'Edit user'
+      expect(page.current_path).to eq '/users/edit'
+      expect(page).to have_field 'Email'
+    end
+  end
+
+  context 'user is signed in and visiting edit user path' do
+
+    let! (:user) { create(:user) }
+    before do
+      visit '/'
+      click_on 'Sign in'
+      fill_in 'Email', with: 'test@test.com'
+      fill_in 'Password', with: 'Password1'
+      click_button 'Log in'
+      click_link 'Edit user'
+    end
+
+    scenario 'is promted a form for updating user info' do
+      expect(page).to have_field 'Email', with: ('test@test.com')
+    end
+
+    scenario 'can update user info' do
+      fill_in 'Email', with: ('new@test.com')
+      fill_in 'Current password', with: ('Password1')
+      click_button 'Update'
+      expect(page).to have_content 'Signed in as: new@test.com'
+    end
 
   end
 
