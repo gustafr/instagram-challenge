@@ -18,7 +18,25 @@ describe 'posts' do
     end
   end
 
-  context 'User click on Add new post link' do
+  context 'user is not logged in and clicks on Add post link' do
+
+    scenario 'is promted the sign in page' do
+      click_link "Add new post"
+      expect(page.current_path).to eq '/users/sign_in'
+    end
+
+  end
+
+  context 'user is logged in and click on Add new post link' do
+
+    let! (:user) { create(:user) }
+    before do
+      visit '/'
+      click_on 'Sign in'
+      fill_in 'Email', with: 'test@test.com'
+      fill_in 'Password', with: 'Password1'
+      click_button 'Log in'
+    end
 
     scenario 'shows an add posts form' do
       click_link "Add new post"
@@ -93,9 +111,31 @@ describe 'posts' do
 
   end
 
-  context 'visiting a posts unique page' do
+  context 'user is not logged in and visiting a posts unique page' do
+
     let! (:post) {create(:post)}
     before do
+      visit "/posts/#{post.id}"
+    end
+
+    scenario 'should not see the edit and delete links' do
+      expect(page).not_to have_content 'Edit post'
+      expect(page).not_to have_content 'Delete post'
+    end
+
+
+  end
+
+  context 'user is logged in and visiting a posts unique page' do
+
+    let! (:user) { create(:user) }
+    let! (:post) {create(:post)}
+    before do
+      visit '/'
+      click_on 'Sign in'
+      fill_in 'Email', with: 'test@test.com'
+      fill_in 'Password', with: 'Password1'
+      click_button 'Log in'
       visit "/posts/#{post.id}"
     end
 
