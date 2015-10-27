@@ -12,6 +12,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.create(post_params)
+    @post.update_attribute(:user, current_user)
     if @post.save
       redirect_to posts_path
     else
@@ -39,9 +40,15 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    @post.destroy
-    flash[:notice] = 'Post deleted successfully!'
-    redirect_to '/posts'
+    if
+      current_user.is_owner? @post
+        @post.destroy
+        flash[:notice] = 'Post deleted successfully!'
+        redirect_to posts_path
+    else
+      flash[:alert] = 'You are not the owner of this post!'
+      render 'show'
+    end
   end
 
   def post_params

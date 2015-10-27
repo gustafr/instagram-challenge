@@ -4,9 +4,10 @@ RSpec.describe Post, type: :model do
   it { is_expected.to validate_presence_of(:title)}
   it { is_expected.to validate_presence_of(:content) }
   it { is_expected.to validate_presence_of(:image) }
-  it {should have_many(:comments)}
+  it { is_expected.to have_many(:comments)}
+  it { is_expected.to belong_to(:user)}
 
-  it "has a valid factory" do
+  xit "has a valid factory" do
     post = create(:post)
   end
 
