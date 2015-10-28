@@ -129,11 +129,11 @@ describe 'posts' do
   context 'user is logged in and visiting a posts unique page' do
 
     let! (:user) { create(:user) }
-    let! (:post) {create(:post)}
+    let! (:post) { user.posts.create(FactoryGirl.attributes_for(:post))}
     before do
       visit '/'
       click_on 'Sign in'
-      fill_in 'Email', with: 'test@test.com'
+      fill_in 'Email', with: user.email
       fill_in 'Password', with: 'Password1'
       click_button 'Log in'
       visit "/posts/#{post.id}"
