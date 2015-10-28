@@ -22,7 +22,8 @@
                         <p>No comments.</p>
 
                     <% end %>
-                    <p><%= link_to "Add comment", new_post_comment_path(post.id), class: 'button' %></p>
+                    <p><%= link_to "Add comment", new_post_comment_path(post.id), class: 'button' %>
+                    <%= link_to "Like", new_post_like_path(post.id), class: 'button' %></p>
                     <p><small>Posted by: <%=post.user.email%> at <%=post.user.created_at%> </small></p>
                   </div>
                 </div>
