@@ -1,38 +1,36 @@
 <main>
   <div class="row">
     <div class="large-12 columns">
-      <div class="panel">
-        <% if @posts.all.any? %>
-            <% @posts.all.each do |post| %>
-                <div class="row">
-                  <div class="large-12 columns">
-                    <div class="callout panel">
-                      <h4><%= link_to post.title, post_path(post) %></h4>
+      <% if @posts.all.any? %>
+          <% @posts.all.each do |post| %>
+              <div class="row">
+                <div class="large-8 columns">
+                  <div class="callout panel">
+                    <h4><%= link_to post.title, post_path(post) %></h4>
+                    <%= image_tag post.image.url(:large) %>
+                    <p><%= post.content %></p>
+                    <h5>Comments for <%= post.title %></h5>
+                    <% if post.comments.any? %>
+                        <ul>
+                          <% post.comments.each do |comment| %>
+                              <li>
+                                <%= comment.thoughts %>
+                              </li>
+                          <% end %>
+                        </ul>
+                    <% else %>
+                        <p>No comments.</p>
 
-                      <p><%= post.content %></p>
-                      <%= image_tag post.image.url(:thumb) %>
-                      <h5>Comments for <%= post.title %></h5>
-                      <% if post.comments.any? %>
-                          <ul>
-                            <% post.comments.each do |comment| %>
-                                <li>
-                                  <%= comment.thoughts %>
-                                </li>
-                            <% end %>
-                          </ul>
-                      <% else %>
-                          <p>No comments.</p>
-
-                      <% end %>
-                      <p><%= link_to "Add comment", new_post_comment_path(post.id) %></p>
-                    </div>
+                    <% end %>
+                    <p><%= link_to "Add comment", new_post_comment_path(post.id), class: 'button' %></p>
+                    <p><small>Posted by: <%=post.user.email%> at <%=post.user.created_at%> </small></p>
                   </div>
                 </div>
-            <% end %>
-        <% else %>
-            <p>There are no posts in the system.</p>
-        <% end %>
-      </div>
+              </div>
+          <% end %>
+      <% else %>
+          <p>There are no posts in the system.</p>
+      <% end %>
     </div>
   </div>
 </main>
