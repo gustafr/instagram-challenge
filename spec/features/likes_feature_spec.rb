@@ -20,16 +20,17 @@ describe 'likes' do
       expect(page).to have_content 'Like'
     end
 
-    scenario 'user clicks on Like button and are presented with a new Like button ' do
+    scenario 'user clicks on Like button and are presented with a Like checkbox' do
       click_link 'Like'
       expect(page).to have_button 'Like'
     end
 
-    xscenario 'user can add a comment' do
-      click_link 'Add comment'
-      fill_in 'comment_thoughts', with: 'Nice picture'
-      click_button 'Create Comment'
-      expect(page).to have_content 'Nice picture'
+    scenario 'user check the like checkbox press the Create like button' do
+      click_link 'Like'
+      check 'Like'
+      click_button 'Create Like'
+      expect(page.current_path).to eq posts_path
+      expect(page).to have_content 'Likes: 1'
     end
 
   end
