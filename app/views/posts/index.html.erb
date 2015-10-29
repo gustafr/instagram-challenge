@@ -6,42 +6,78 @@
               <div class="row">
                 <div class="large-8 columns">
                   <div class="callout panel">
+                    <h4> <%= post.user.email %> at <%= post.user.created_at %> </h4>
                     <h4><%= link_to post.title, post_path(post) %></h4>
-                    <%= image_tag post.image.url(:large) %>
-                    <p><%= post.content %></p>
-                    <h5>Comments for <%= post.title %></h5>
+                    <%= image_tag post.image.url(:large) %><br><br>
+
+                    <div class="row">
+                      <div class="large-12 columns">
+                        <%= link_to "Add comment", new_post_comment_path(post.id), class: 'button small' %>
+                        <%= form_tag post_likes_path(post), method: 'post' do %>
+                            <%= submit_tag("Like", class: 'button small') unless current_user && current_user.has_liked?(post) %>
+                        <% end %>
+                        <% if current_user && if current_user.has_liked?(post) %>
+                            <%= form_tag "posts/#{post.id}/likes/#{get_like_id(post, current_user)}", method: 'delete' do %>
+                                <%= submit_tag("Unlike", class: 'button small') %>
+                            <% end %>
+                        <% end %>
+                        <% end %>
+                        <hr>
+                      </div>
+                    </div>
+                    <h5> <%= post.likes.count %> Likes</h5>
+
+                    <div class="row">
+                      <div class="large-8  small-12 columns">
+                        <!-- COMMENT -->
+                        <div class="comment">
+                          <section class="top">
+                            <h6 class="byline">
+                              <a href="#"><i class="icon"></i> <%= post.user.email %></a>
+                              <small>said
+							<span class="data">
+								<%= post.created_at %>
+							</span>
+                              </small>
+                            </h6>
+                          </section>
+                          <section class="content">
+                            <p> <%= post.content %> </p>
+
+                          </section>
+
+                        </div>
+                      </div>
+                    </div>
                     <% if post.comments.any? %>
                         <ul>
                           <% post.comments.each do |comment| %>
-                              <li>
-                                <%= comment.thoughts %>
-                              </li>
+                              <div class="row">
+                                <div class="large-8  small-12 columns">
+                                  <!-- COMMENT -->
+                                  <div class="indented comment">
+                                    <section class="top">
+                                      <h6 class="byline">
+                                        <a href="#"><i class="icon"></i> <%= comment.user.email %></a>
+                                        <small> said
+							<span class="data">
+								<%= comment.created_at %>
+							</span>
+                                        </small>
+                                      </h6>
+                                    </section>
+                                    <section class="content">
+                                      <p> <%= comment.thoughts %></p>
+
+                                    </section>
+
+                                  </div>
+                                </div>
+                              </div>
                           <% end %>
                         </ul>
-                    <% else %>
-                        <p>No comments.</p>
-
                     <% end %>
-                    <span style="display: inline;"> <%= link_to "Add comment", new_post_comment_path(post.id), class: 'button' %>
-                      <%= form_tag post_likes_path(post), method: 'post' do %>
-                          <%= submit_tag("Like", class: 'button') unless current_user && current_user.has_liked?(post) %>
-                      <% end %>
-                      <% if current_user && if current_user.has_liked?(post) %>
-                        <%= form_tag "posts/#{post.id}/likes/#{get_like_id(post, current_user)}", method: 'delete' do %>
-                            <%= submit_tag("Unlike", class: 'button') %>
-                        <% end %>
-                    <% end %>
-                          </span>
-                      <% end %>
-
-
-                      <p>
-                        <small>Likes: <%= post.likes.count %> </small>
-                      </p>
-                    <p>
-                      <small>Posted by: <%= post.user.email %> at <%= post.user.created_at %> </small>
-                    </p>
-                      </div>
+                  </div>
                 </div>
               </div>
           <% end %>
