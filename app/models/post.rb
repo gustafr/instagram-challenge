@@ -10,4 +10,9 @@ class Post < ActiveRecord::Base
   has_many :likes, dependent: :destroy
   belongs_to :user
 
+  def find_like(user)
+    likes.where(user_id: user.id).first.id
+  end
+#För en post: hitta en like som har samma user_id som user.id (argumentet jag skickar in)
 end
+

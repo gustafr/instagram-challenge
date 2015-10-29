@@ -23,8 +23,22 @@
 
                     <% end %>
                     <p><%= link_to "Add comment", new_post_comment_path(post.id), class: 'button' %>
-                    <%= link_to "Like", new_post_like_path(post.id), class: 'button' %></p>
-                    <p><small>Posted by: <%=post.user.email%> at <%=post.user.created_at%> </small></p>
+                      <%= form_tag post_likes_path(post), method: 'post' do %>
+                          <%= submit_tag("Like", class: 'button') unless current_user && current_user.has_liked?(post) %>
+                      <% end %></p>
+
+                    <% if current_user && if current_user.has_liked?(post) %>
+                        <%= form_tag "posts/#{post.id}/likes/#{get_like_id(post, current_user)}", method: 'delete' do %>
+                            <%= submit_tag("Unlike", class: 'button') %>
+                        <% end %>
+                    <% end %>
+                    <% end %>
+                    <p>
+                      <small>Likes: <%= post.likes.count %> </small>
+                    </p>
+                    <p>
+                      <small>Posted by: <%= post.user.email %> at <%= post.user.created_at %> </small>
+                    </p>
                   </div>
                 </div>
               </div>

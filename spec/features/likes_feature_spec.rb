@@ -5,8 +5,8 @@ describe 'likes' do
 
   context 'a post is added and a logged in user is viewing that post' do
 
-    let! (:user) { create(:user)}
-    let! (:post) { user.posts.create(FactoryGirl.attributes_for(:post))}
+    let! (:user) { create(:user) }
+    let! (:post) { user.posts.create(FactoryGirl.attributes_for(:post)) }
 
     before do
       visit '/'
@@ -18,19 +18,39 @@ describe 'likes' do
 
     scenario 'user is promted with a Like button' do
       expect(page).to have_content 'Like'
+      expect(page).not_to have_button 'Unlike'
     end
 
-    scenario 'user clicks on Like button and are presented with a Like checkbox' do
-      click_link 'Like'
-      expect(page).to have_button 'Like'
-    end
-
-    scenario 'user check the like checkbox press the Create like button' do
-      click_link 'Like'
-      check 'Like'
-      click_button 'Create Like'
-      expect(page.current_path).to eq posts_path
+    scenario 'user clicks on Like button raises likes by 1' do
+      click_button 'Like'
       expect(page).to have_content 'Likes: 1'
+      expect(page).not_to have_button 'Like'
+    end
+  end
+
+  context 'a post is added and a logged in user has liked a post' do
+
+    let! (:user) { create(:user) }
+    let! (:post) { user.posts.create(FactoryGirl.attributes_for(:post)) }
+
+    before do
+      visit '/'
+      click_on 'Sign in'
+      fill_in 'Email', with: 'test@test.com'
+      fill_in 'Password', with: 'Password1'
+      click_button 'Log in'
+      click_button 'Like'
+    end
+
+    scenario 'user is promted with a Unlike button' do
+      expect(page).to have_button 'Unlike'
+      expect(page).not_to have_button 'Like'
+    end
+
+    scenario 'user clicks on Unlike button lower likes by 1' do
+      click_button 'Unlike'
+      expect(page).to have_content 'Likes: 0'
+      expect(page).not_to have_button 'Unlike'
     end
 
   end

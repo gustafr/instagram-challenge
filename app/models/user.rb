@@ -7,8 +7,22 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :likes
 
-  def is_owner?(post)
+  def is_post_owner?(post)
     posts.include?(post)
+  end
+
+  def is_likes_owner?(like)
+    likes.include?(like)
+  end
+
+  def has_liked?(post)
+    likes.any? do |like|
+      like.post_id == (post.id)
+    end
+  end
+
+  def unlike(post)
+    posts.find(post).likes.first.destroy!
   end
 
 end
