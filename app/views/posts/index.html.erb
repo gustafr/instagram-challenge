@@ -6,8 +6,15 @@
               <div class="row">
                 <div class="large-8 columns">
                   <div class="callout panel">
-                    <h4> <%= post.user.email %> at <%= post.user.created_at %> </h4>
-                    <h4><%= link_to post.title, post_path(post) %></h4>
+
+                    <p class="text-right"> <%= get_hours_since_posted(post) %> h</p>
+                    <% if current_user && if current_user.is_post_owner?(post) %>
+                        <p class="text-left"><%= link_to post.user.email, post_path(post) %></p>
+                    <% else %>
+                        <p class="text-left"><%= post.user.email %></p>
+                    <% end %>
+                    <% end %>
+
                     <%= image_tag post.image.url(:large) %><br><br>
 
                     <div class="row">
@@ -29,14 +36,14 @@
 
                     <div class="row">
                       <div class="large-8  small-12 columns">
-                        <!-- COMMENT -->
+                        <!-- CONTENT -->
                         <div class="comment">
                           <section class="top">
                             <h6 class="byline">
-                              <a href="#"><i class="icon"></i> <%= post.user.email %></a>
+                              <i class="icon"></i> <%= post.user.email %>
                               <small>said
 							<span class="data">
-								<%= post.created_at %>
+								<%= get_hours_since_posted(post) %> h ago
 							</span>
                               </small>
                             </h6>
@@ -49,6 +56,7 @@
                         </div>
                       </div>
                     </div>
+
                     <% if post.comments.any? %>
                         <ul>
                           <% post.comments.each do |comment| %>
@@ -58,10 +66,10 @@
                                   <div class="indented comment">
                                     <section class="top">
                                       <h6 class="byline">
-                                        <a href="#"><i class="icon"></i> <%= comment.user.email %></a>
+                                        <i class="icon"></i> <%= comment.user.email %>
                                         <small> said
 							<span class="data">
-								<%= comment.created_at %>
+								<%= get_hours_since_comment(comment) %> h ago
 							</span>
                                         </small>
                                       </h6>

@@ -52,7 +52,7 @@ describe 'posts' do
       attach_file("post_image", Rails.root + "spec/photos/test.jpg")
       click_on 'Create Post'
       expect(page.current_path).to eq '/posts'
-      expect(page).to have_content 'My first post'
+      expect(page).to have_content 'test@test.com'
     end
 
     xscenario 'cant add a new post without entering title' do
@@ -99,13 +99,17 @@ describe 'posts' do
     end
 
     scenario 'should list added posts' do
-      expect(page).to have_content 'First post'
+      expect(page).to have_content 'test@test.com'
       expect(page).not_to have_content 'There are no posts in the system.'
     end
 
-    scenario 'should be able to show a post' do
-      click_link 'First post'
-      expect(page).to have_content 'First post'
+    scenario 'should be able to show a post if user is post owner' do
+      click_on 'Sign in'
+      fill_in 'Email', with: 'test@test.com'
+      fill_in 'Password', with: 'Password1'
+      click_button 'Log in'
+      click_link 'test@test.com'
+      expect(page).to have_content 'Hello world'
       expect(page.current_path).to eq "/posts/#{post.id}"
     end
 
@@ -149,7 +153,7 @@ describe 'posts' do
       fill_in 'post_title', with: 'Updated post'
       fill_in 'post_content', with: 'New content'
       click_on 'Update Post'
-      expect(page).to have_content 'Updated post'
+      expect(page).to have_content 'New content'
     end
 
     scenario 'should be able to delete a post' do

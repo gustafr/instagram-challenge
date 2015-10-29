@@ -13,5 +13,13 @@ class Post < ActiveRecord::Base
   def find_like(user)
     likes.where(user_id: user.id).first.id
   end
+
+  def hours_since_posted
+    time_created = created_at.to_i
+    time_now = Time.now.to_i
+    hours_since_post = (time_now - time_created) / 3600
+    hours_since_post
+  end
+
 end
 
