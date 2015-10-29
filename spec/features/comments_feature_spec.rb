@@ -16,7 +16,6 @@ describe 'comments' do
     end
 
     scenario 'user trying to add a comment is asked to log in first' do
-      byebug
       click_link 'Add comment'
       expect(page.current_path).to eq '/users/sign_in'
     end
