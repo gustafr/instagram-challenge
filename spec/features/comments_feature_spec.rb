@@ -2,11 +2,31 @@ require 'rails_helper'
 
 describe 'comments' do
 
+  context 'a post is added and a non signed-in user is viewing that post' do
+
+    let! (:user) { create(:user) }
+    let! (:post) { user.posts.create(FactoryGirl.attributes_for(:post)) }
+
+    before do
+      visit '/'
+    end
+
+    scenario 'user is promted with an add comment link' do
+      expect(page).to have_content 'Add comment'
+    end
+
+    scenario 'user trying to add a comment is asked to log in first' do
+      byebug
+      click_link 'Add comment'
+      expect(page.current_path).to eq '/users/sign_in'
+    end
+
+  end
 
   context 'a post is added and a logged in user is viewing that post' do
 
-    let! (:user) { create(:user)}
-    let! (:post) { user.posts.create(FactoryGirl.attributes_for(:post))}
+    let! (:user) { create(:user) }
+    let! (:post) { user.posts.create(FactoryGirl.attributes_for(:post)) }
 
     before do
       visit '/'

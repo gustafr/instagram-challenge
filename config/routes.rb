@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  #devise_for :users, controllers: {registrations: :my_registration}
   root to: "posts#index"
-
-  #get '/custom_post', controller: :likes, action: :my_method, as: :my_method
+  
   resources :posts do
     resources :comments
     resources :likes

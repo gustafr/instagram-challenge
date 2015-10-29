@@ -21,8 +21,4 @@ class User < ActiveRecord::Base
     end
   end
 
-  def unlike(post)
-    posts.find(post).likes.first.destroy!
-  end
-
 end

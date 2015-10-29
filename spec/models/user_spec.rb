@@ -1,12 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it { is_expected.to have_many(:comments)}
-  it { is_expected.to have_many(:posts)}
+
+  subject { FactoryGirl.create(:user) }
+
+  describe 'attributes' do
+    it { is_expected.to have_db_column(:email).of_type(:string) }
+    it { is_expected.to have_db_column(:encrypted_password).of_type(:string) }
+  end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:comments) }
+    it { is_expected.to have_many(:posts) }
+  end
 
   it "has a valid factory" do
-    post = create(:user)
-    expect(post).to be_valid
+    expect(subject).to be_valid
   end
 
 end

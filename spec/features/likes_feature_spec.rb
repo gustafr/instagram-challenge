@@ -2,6 +2,26 @@ require 'rails_helper'
 
 describe 'likes' do
 
+  context 'a post is added and a non signed-in user is viewing that post' do
+
+    let! (:user) { create(:user) }
+    let! (:post) { user.posts.create(FactoryGirl.attributes_for(:post)) }
+
+    before do
+      visit '/'
+    end
+
+    scenario 'user is promted with a Like button' do
+      expect(page).to have_content 'Like'
+      expect(page).not_to have_button 'Unlike'
+    end
+
+    scenario 'user trying to like a post is asked to log in' do
+      click_button 'Like'
+      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+      expect(page.current_path).to eq '/users/sign_in'
+    end
+  end
 
   context 'a post is added and a logged in user is viewing that post' do
 
