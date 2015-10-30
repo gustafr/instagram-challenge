@@ -33,7 +33,7 @@ RSpec.describe Post, type: :model do
       allow(Time).to receive(:now).and_return(Time.mktime(2015, 10, 27))
       expect(subject.hours_since_posted).to eq 23
     end
-    
+
   end
 
 end

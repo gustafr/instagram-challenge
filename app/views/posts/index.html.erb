@@ -2,7 +2,7 @@
   <div class="row">
     <div class="large-12 columns">
       <% if @posts.all.any? %>
-          <% @posts.all.each do |post| %>
+          <% @posts.all.reverse.each do |post| %>
               <div class="row">
                 <div class="large-8 columns">
                   <div class="callout panel">
