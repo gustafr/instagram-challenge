@@ -21,8 +21,17 @@ RSpec.describe Post, type: :model do
     it { is_expected.to belong_to(:user) }
   end
 
-  it "has a valid factory" do
-    expect(subject).to be_valid
+  describe 'fixtures' do
+    it "has a valid factory" do
+      expect(subject).to be_valid
+    end
+  end
+
+  describe 'helper methods' do
+    it 'can calculate the time, in, hours, since post was created' do
+      allow(Time).to receive(:now).and_return(Time.mktime(2015,10,27))
+      expect(subject.hours_since_posted).to eq 23
+    end
   end
 
 end

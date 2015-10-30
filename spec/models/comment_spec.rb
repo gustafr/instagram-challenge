@@ -17,8 +17,10 @@ RSpec.describe Comment, type: :model do
     it { is_expected.to belong_to(:post) }
   end
 
-  it "has a valid factory" do
-    expect(subject).to be_valid
+  describe 'fixtures' do
+    it "has a valid factory" do
+      expect(subject).to be_valid
+    end
   end
 
 end

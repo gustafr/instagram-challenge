@@ -12,8 +12,10 @@ RSpec.describe Like, type: :model do
     it { is_expected.to validate_presence_of(:status) }
   end
 
-  it "has a valid factory" do
-    expect(subject).to be_valid
+  describe 'fixtures' do
+    it "has a valid factory" do
+      expect(subject).to be_valid
+    end
   end
 
 end
