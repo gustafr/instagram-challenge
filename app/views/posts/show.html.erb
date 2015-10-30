@@ -1,5 +1,13 @@
-<p><%= @post.title %></p>
-<p><%= @post.content %></p>
-<%= image_tag @post.image.url(:medium) %>
-<p><%= link_to "Edit post", edit_post_path(@post.id) if current_user && current_user.is_post_owner?(@post)  %></p>
-<p><%= link_to "Delete post", post_path(@post.id), method: :delete if current_user && current_user.is_post_owner?(@post) %></p>
+<div class="row">
+  <div class="large-8 columns">
+    <div class="callout panel">
+      <p><%= @post.title %></p>
+
+      <p><%= @post.content %></p>
+      <%= image_tag @post.image.url(:medium) %>
+      <p><%= link_to "Edit post", edit_post_path(@post.id) if current_user && current_user.is_post_owner?(@post) %></p>
+
+      <p><%= link_to "Delete post", post_path(@post.id), method: :delete if current_user && current_user.is_post_owner?(@post) %></p>
+    </div>
+  </div>
+</div>

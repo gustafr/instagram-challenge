@@ -47,7 +47,7 @@ describe 'comments' do
     scenario 'user can add a comment' do
       click_link 'Add comment'
       fill_in 'comment_thoughts', with: 'Nice picture'
-      click_button 'Create Comment'
+      click_button 'Post Comment'
       expect(page).to have_content 'Nice picture'
     end
 

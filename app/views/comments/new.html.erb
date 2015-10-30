@@ -1,5 +1,11 @@
-<%= form_for [@post, @comment] do |f| %>
-    <%= f.label :thoughts %>
-    <%= f.text_field :thoughts %>
-    <%= f.submit %>
-<% end %>
+<div class="row">
+  <div class="large-8 columns">
+    <div class="callout panel">
+      <%= form_for [@post, @comment] do |f| %>
+          <%= f.label :thoughts %>
+          <%= f.text_area :thoughts, placeholder: 'Type in your comment here...', autofocus: true %>
+          <%=  submit_tag("Post Comment", class: 'button small')  %>
+      <% end %>
+    </div>
+  </div>
+</div>
