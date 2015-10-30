@@ -14,8 +14,10 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:posts) }
   end
 
-  it "has a valid factory" do
-    expect(subject).to be_valid
+  describe 'fixtures' do
+    it "has a valid factory" do
+      expect(subject).to be_valid
+    end
   end
 
 end
