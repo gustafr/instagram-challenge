@@ -7,6 +7,11 @@ FactoryGirl.define do
     image { fixture_file_upload(Rails.root.join('spec', 'photos', 'test.jpg'), 'image/jpg') }
     created_at "2015-10-26 00:00:00.00"
 
+    factory :post_other do
+      title "Second post"
+      content "This is my second post"
+    end
+
     factory :post_with_user do
       association :user, factory: :user
     end

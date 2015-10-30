@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
+  def my_posts
+    posts.all
+  end
+
   def is_post_owner?(post)
     posts.include?(post)
   end

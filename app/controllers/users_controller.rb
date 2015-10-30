@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def get_my_posts
-    @post = Post.all
+    @posts = current_user.my_posts
     render 'index'
   end
 

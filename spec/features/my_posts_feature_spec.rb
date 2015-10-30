@@ -39,6 +39,25 @@ describe 'My Posts' do
 
   context 'user is signed in and has made a post' do
 
+    let! (:user) { FactoryGirl.create(:user) }
+    let! (:other_user) { FactoryGirl.create(:user_faker) }
+    before do
+      visit '/'
+      click_on 'Sign in'
+      fill_in 'Email', with: 'test@test.com'
+      fill_in 'Password', with: 'Password1'
+      click_button 'Log in'
+    end
+
+    scenario 'user clicks on My posts and is promted with his posts' do
+      user.posts.create(FactoryGirl.attributes_for(:post))
+      other_user.posts.create(FactoryGirl.attributes_for(:post_other))
+      click_link 'My posts'
+      expect(page.current_path).to eq '/my_posts'
+      expect(page).to have_content 'Hello world'
+      expect(page).not_to have_content 'This is my second post'
+    end
+
   end
 
 end
