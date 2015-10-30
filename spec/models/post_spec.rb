@@ -28,10 +28,12 @@ RSpec.describe Post, type: :model do
   end
 
   describe 'helper methods' do
+
     it 'can calculate the time, in, hours, since post was created' do
-      allow(Time).to receive(:now).and_return(Time.mktime(2015,10,27))
+      allow(Time).to receive(:now).and_return(Time.mktime(2015, 10, 27))
       expect(subject.hours_since_posted).to eq 23
     end
+    
   end
 
 end

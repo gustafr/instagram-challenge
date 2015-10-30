@@ -93,7 +93,7 @@ describe 'posts' do
 
   context 'new post have been added' do
 
-    let! (:post) {create(:post)}
+    let! (:post) {create(:post_with_user)}
     before do
       visit '/posts'
     end

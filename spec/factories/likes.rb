@@ -1,6 +1,10 @@
 FactoryGirl.define do
+
   factory :like do
     status true
-  end
 
+    factory :like_with_user do
+      association :user, factory: :user
+    end
+  end
 end
