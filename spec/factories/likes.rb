@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :like do
-    status false
+    status true
   end
 
 end
