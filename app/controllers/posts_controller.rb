@@ -36,6 +36,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @post.update(post_params)
     if @post.save
+      flash[:notice] = 'Post updated successfully!'
       redirect_to posts_path
     else
       render 'edit'

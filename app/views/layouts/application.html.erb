@@ -48,10 +48,32 @@
   </section>
 </nav>
 
-<p class="notice"><%= notice %></p>
+<% if flash %>
+    <% flash.each do |name, msg| %>
+        <div id="flash-container" data-alert class="alert-box <%= name.to_s == 'notice' ? 'success' : 'alert' %>">
+          <%= msg %>
+          <a href="#" class="close">&times;</a>
+        </div>
+    <% end %>
+<% end %>
 
-<p class="alert"><%= alert %></p>
 <%= yield %>
+
+<script>
+  $(document).ready(function () {
+    var flash = $('#flash-container');
+    if (flash.length > 0) {
+      window.setTimeout(function () {
+        flash.fadeTo(1000, 0).slideUp(1000, function () {
+          $(this).remove();
+        });
+      }, 2000);
+    }
+  });
+</script>
+<script>
+  $(document).foundation();
+</script>
 
 </body>
 </html>
