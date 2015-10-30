@@ -17,7 +17,6 @@ describe 'My Posts' do
       expect(page.current_path).to eq '/users/sign_in'
       expect(page).to have_content 'You need to sign in'
     end
-
   end
 
   context 'user is signed in' do
@@ -33,10 +32,12 @@ describe 'My Posts' do
 
     scenario 'user clicks on My posts link and is redirected to my_posts path' do
       click_link 'My posts'
-      #byebug
       expect(page.current_path).to eq '/my_posts'
       expect(page).to have_content 'You haven\'t made any posts yet'
     end
+  end
+
+  context 'user is signed in and has made a post' do
 
   end
 
