@@ -138,6 +138,7 @@ describe 'users' do
       expect(page.current_path).to eq '/users/edit'
       expect(page).to have_field 'Email'
     end
+
   end
 
   context 'user is signed in and visiting edit user path' do
