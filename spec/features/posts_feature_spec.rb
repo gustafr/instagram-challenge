@@ -41,13 +41,11 @@ describe 'posts' do
     scenario 'shows an add posts form' do
       click_link "Add new post"
       expect(page.current_path).to eq '/posts/new'
-      expect(page).to have_field 'post_title'
       expect(page).to have_field 'post_content'
     end
 
     scenario 'can add a new post when typing in required information' do
       click_link "Add new post"
-      fill_in 'post_title', with: 'My first post'
       fill_in 'post_content', with: 'Hello world'
       attach_file("post_image", Rails.root + "spec/photos/test.jpg")
       click_on 'Create Post'
@@ -55,17 +53,8 @@ describe 'posts' do
       expect(page).to have_content 'test@test.com'
     end
 
-    xscenario 'cant add a new post without entering title' do
-      click_link "Add new post"
-      fill_in 'post_content', with: 'Hello world'
-      attach_file("post_image", Rails.root + "spec/photos/test.jpg")
-      click_on 'Create Post'
-      expect(page).to have_content 'Title can\'t be blank'
-    end
-
     scenario 'cant add a new post without entering content' do
       click_link "Add new post"
-      fill_in 'post_title', with: 'My first post'
       attach_file("post_image", Rails.root + "spec/photos/test.jpg")
       click_on 'Create Post'
       expect(page).to have_content 'Content can\'t be blank'
@@ -73,7 +62,6 @@ describe 'posts' do
 
     scenario 'cant add a new post without attaching an image' do
       click_link "Add new post"
-      fill_in 'post_title', with: 'My first post'
       fill_in 'post_content', with: 'Hello world'
       click_on 'Create Post'
       expect(page).to have_content 'Image can\'t be blank'
@@ -81,7 +69,6 @@ describe 'posts' do
 
     scenario 'cant add a new post when attaching other file than image' do
       click_link "Add new post"
-      fill_in 'post_title', with: 'My first post'
       fill_in 'post_content', with: 'Hello world'
       attach_file("post_image", Rails.root + "spec/photos/test.pdf")
       click_on 'Create Post'
@@ -150,7 +137,6 @@ describe 'posts' do
 
     scenario 'should be able to update a post' do
       click_link 'Edit post'
-      fill_in 'post_title', with: 'Updated post'
       fill_in 'post_content', with: 'New content'
       click_on 'Update Post'
       expect(page).to have_content 'New content'
